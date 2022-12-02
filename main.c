@@ -6,6 +6,12 @@
 #include "utility.c"
 #include "platform.c"
 
+struct aoc_result
+{
+	int Res1;
+	int Res2;
+};
+
 #include "aoc_day01.c"
 
 int main()

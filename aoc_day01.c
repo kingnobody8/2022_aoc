@@ -12,13 +12,6 @@ struct ad1_elf
 	int FoodALength;
 };
 
-struct aoc_result
-{
-	int Res1;
-	int Res2;
-};
-
-
 
 struct ad1_input_stat DetermineInputStat(const char* aTxt)
 {
@@ -56,19 +49,20 @@ int aocday01_part1(struct ad1_input_stat aStat, int* aFoodA, struct ad1_elf* aEl
 {
 	int Result = 0;
 
-	//determine which elf has the most calories
-	{
-		struct ad1_elf* HighestElf = &aElfA[0];
-		for (int i = 1; i < aStat.NumberOfElves; ++i)
-		{
-			struct ad1_elf* IterElf = &aElfA[i];
-			if (IterElf->Total > HighestElf->Total)
-			{
-				HighestElf = IterElf;
-			}
-		}
+	//determine the total of the top 1 elf (aElfaA is already sorted hi->lo)
+	Result += aElfA[0].Total;
 
-		Result = HighestElf->Total;
+	return Result;
+}
+
+int aocday01_part2(struct ad1_input_stat Stat, int* aFoodA, struct ad1_elf* aElfA)
+{
+	int Result = 0;
+
+	//determine the total of the top 3 elves (aElfaA is already sorted hi->lo)
+	for (int i = 0; i < 3; ++i)
+	{
+		Result += aElfA[i].Total;
 	}
 
 	return Result;
@@ -81,23 +75,6 @@ SORT_FUNC(ElfSortFunc)
 	return RElf->Total - LElf->Total;
 }
 
-int aocday01_part2(struct ad1_input_stat Stat, int* aFoodA, struct ad1_elf* aElfA)
-{
-	int Result = 0;
-
-	//determine the total of the top 3 elves
-	{
-		Sort(aElfA, Stat.NumberOfElves, sizeof(struct ad1_elf), &ElfSortFunc);
-
-		for (int i = 0; i < 3; ++i)
-		{
-			Result += aElfA[i].Total;
-		}
-	}
-
-	return Result;
-}
-
 struct aoc_result aocday01()
 {
 	struct aoc_result Result = { 0 };
@@ -108,6 +85,7 @@ struct aoc_result aocday01()
 	{
 		const char* FileTxt = (const char*)FileMemory.Memory;
 
+		//allocate working memory based on input data
 		struct ad1_input_stat Stat = DetermineInputStat(FileTxt);
 		int* FoodA = PlatformAlloc(sizeof(int) * Stat.NumberOfFoods);
 		struct ad1_elf* ElfA = (struct ad1_elf*)PlatformAlloc(sizeof(struct ad1_elf) * Stat.NumberOfElves);
@@ -148,9 +126,13 @@ struct aoc_result aocday01()
 			}
 		}
 
+		//sort the elves (highest total to lowest)
+		Sort(ElfA, Stat.NumberOfElves, sizeof(struct ad1_elf), &ElfSortFunc);
+
 		Result.Res1 = aocday01_part1(Stat, FoodA, ElfA);
 		Result.Res2 = aocday01_part2(Stat, FoodA, ElfA);
 
+		//memory cleanup
 		PlatformFree(ElfA);
 		PlatformFree(FoodA);
 		PlatformFree(FileMemory.Memory);
