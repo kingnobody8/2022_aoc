@@ -26,4 +26,5 @@ cl ^
 /WX ^
 /STACK:0x100000,0x100000 ^
 /subsystem:console ^
-	kernel32.lib
+	kernel32.lib ^
+	user32.lib
