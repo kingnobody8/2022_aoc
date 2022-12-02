@@ -14,6 +14,8 @@ cl ^
 /WX ^
 /W4 ^
 /wd4100 ^
+/wd4189 ^
+/wd4101 ^
 /Z7 ^
 /Zc:threadSafeInit- ^
 	main.c ^
