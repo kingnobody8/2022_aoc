@@ -13,7 +13,7 @@ struct ad1_elf
 };
 
 
-struct ad1_input_stat DetermineInputStat(const char* aTxt)
+struct ad1_input_stat Ad1DetermineInputStat(const char* aTxt)
 {
 	struct ad1_input_stat Result = { 0 };
 
@@ -86,7 +86,7 @@ struct aoc_result aocday01()
 		const char* FileTxt = (const char*)FileMemory.Memory;
 
 		//allocate working memory based on input data
-		struct ad1_input_stat Stat = DetermineInputStat(FileTxt);
+		struct ad1_input_stat Stat = Ad1DetermineInputStat(FileTxt);
 		int* FoodA = PlatformAlloc(sizeof(int) * Stat.NumberOfFoods);
 		struct ad1_elf* ElfA = (struct ad1_elf*)PlatformAlloc(sizeof(struct ad1_elf) * Stat.NumberOfElves);
 
