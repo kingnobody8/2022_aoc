@@ -16,6 +16,7 @@ struct aoc_result
 #include "aoc_day02.c"
 #include "aoc_day03.c"
 #include "aoc_day04.c"
+#include "aoc_day05.c"
 
 int main()
 {
@@ -25,6 +26,7 @@ int main()
 	Result = aocday02(); //12535 & 15457
 	Result = aocday03(); //8088 & 2522
 	Result = aocday04(); //644 & 926
+	Result = aocday05(); //SHMSDGZVC & VRZGHDFBQ
 
 	DWORD Written = 0;
 	WriteConsole(hConsoleOutput, "Hello World!", 12, &Written, 0);

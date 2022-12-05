@@ -6,6 +6,14 @@ bool IsDigit(char aChar)
 	return Result;
 }
 
+bool IsAlpha(char aChar)
+{
+	//NOTE (dhabig): this will fail if the OS defines a non-standard order for the ASCII character set.
+	bool Result = ((aChar >= 'A' && aChar <= 'Z') ||
+		((aChar >= 'a' && aChar <= 'z')));
+	return Result;
+}
+
 //returns string end
 const char* Atoi(const char* aString, int* aoutResult)
 {
